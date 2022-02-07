@@ -69,6 +69,7 @@ const fe = () => {
                 const p = "OPQ";
                 return x + y + z + u + p;
             }
+            //
             return fiii;
         }
         //
@@ -78,3 +79,64 @@ const fe = () => {
     return fi;
 }
 console.log(fe()()()())
+///
+const Q = "ABCD";
+const feX = () => {
+    const W = "EFGH";
+    
+    return fi = () => {
+        const R = "IJK";
+        return Q + W + R;        
+    };
+};
+const anidadas = (feX()());
+console.log(anidadas)
+
+
+
+
+//CONTADOR
+//contadorUno existe como argumento de la función, y toma el valor de cero por defecto (si no se señala un valor )
+function crearContador(contadorUno = 0){
+    
+    //devuelve un objeto con diferentes funciones asignadas a sus propiedades
+    return {
+        aumentar: function(){
+            return contadorUno++;
+        },
+        disminuir: function(){
+            return contadorUno--; 
+        },
+        obtenerValor: function(){
+            return contadorUno;
+        }
+    }
+};
+//contador1 devuelve un objeto (return)
+const contador1 = crearContador();
+//como es un objeto, podemos acceder a sus propiedades con el punto
+//Como sus propiedades son funciones closures, entonces deben ejecutarse con ()
+//Solo podemos acceder al valor de contador usando su función desde .obtenerValor
+//tampoco podemos modificar el contadorUno
+contador1.aumentar()
+console.log(contador1.obtenerValor())
+contador1.aumentar()
+contador1.aumentar()
+contador1.aumentar()
+console.log(contador1.obtenerValor())
+contador1.disminuir()
+console.log(contador1.obtenerValor())
+
+const contador2 = crearContador(500)
+console.log(contador2.obtenerValor())
+contador2.aumentar()
+contador2.aumentar()
+contador2.aumentar()
+console.log(contador2.obtenerValor())
+
+//
+console.log('%c Éxito: usuario registrado!', 'background:green; color:white; padding: 10px; border-radius: 15px;')
+
+
+
+
