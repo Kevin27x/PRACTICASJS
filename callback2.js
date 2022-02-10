@@ -74,7 +74,9 @@ promise.then(
     ).catch(response => console.log(response));
 //Then ejecuta la función callback "resolve" cuando la promesa se cumple. Mientras que Catch ejecuta la función callback "reject" cuando la promesa se rechaza. Finally, ejecuta la función callback "end" tanto si se cumple como si se rechaza.
 // Las promesas pueden estar: pendiente, aceptada o rechazada
-const x = 18;
+//-----------------------------------------------------------------
+
+const x = 30;
 const promise1 = new Promise((resolve, reject) => {
     if( x > 20){
         resolve(x);
@@ -84,6 +86,7 @@ const promise1 = new Promise((resolve, reject) => {
 });
 const promise2 = new Promise((resolve, reject) => {
     setTimeout(() => {
+        
         resolve(data[0].name);
         
     }, 5000)
@@ -98,11 +101,95 @@ const promise3 = new Promise((resolve, reject) => {
 Promise.all([promise1, promise2, promise3])
     .then(
         response => {
-            console.log(response);
-            response.forEach(element => {
-                console.log(element)
+            console.log(response) //array
+            console.log(`Exito: ${response}`); //string + array
+            response.forEach(element => { //elementos del array
+                console.log(element);
             })
         }
     ).catch(responseError => console.log(responseError))
 //Devuelve un arreglo de los resultados de cada una de las promesas.
 //Podemos imprimir por separado el arreglo, iterando el array con forEach
+//--------------------------------
+//Ejercicio propuesto (6)
+//Crear un programa con JavaScript utilizando promesas que calcule un número aleatorio
+//entre el “1” y el “100”, pero que muestre el número aleatorio si y sólo si este número está
+//comprendido entre “20” y “60”, ambos valores incluidos.
+const promise4 = new Promise ((resolve,reject) => {
+    const aleatorio = Math.floor(Math.random() *100);
+    if(aleatorio >= 20 && aleatorio <=60){
+        resolve(aleatorio)
+    }else{
+        reject(`El número es ${aleatorio}. Está fuera del rango `)
+    }
+    
+});
+promise4.then(response => console.log(`El número es ${response}. Está entre 20 y 60`)).catch(response => console.log(response))
+//Usar el método promise.race y poner en carrera 3 promesas con setTimeout y valores de tiempo aleatorios. 
+
+const promise5 = new Promise((resolve, reject) => {
+    let aleatorio = Math.floor(Math.random()*10000);
+    setTimeout( () => {
+        resolve(`Promesa ganadora: 5 ||
+    tiempo: ${aleatorio} milisegundos`)
+    }, aleatorio);
+});
+const promise6 = new Promise((resolve, reject) => {
+    let aleatorio = Math.floor(Math.random()*10000);
+    setTimeout( () => {
+        resolve(`Promesa ganadora: 6 ||
+    tiempo: ${aleatorio} milisegundos`)
+    }, aleatorio);
+});
+const promise7 = new Promise((resolve, reject) => {
+    let aleatorio = Math.floor(Math.random()*10000);
+    setTimeout( () => {
+        resolve(`Promesa ganadora: 6 ||
+    tiempo: ${aleatorio} milisegundos`)
+    }, aleatorio);
+});
+Promise.race([promise5, promise6,promise7])
+    .then(response => console.log(response));
+
+//Ejercicio guiado: Promise.race, la respuesta más rápida
+//En un colegio, la profesora decide dar incentivos a quien responda primero las preguntas
+//que hace. El que lo haga obtendrá décimas para la próxima evaluación. Selecciona a Carlos,
+//María y Cristian para que respondan. Los estudiantes piensan y dan su respuesta casi al
+//mismo tiempo, ¿quién da la respuesta más rápido?//
+const random = () => {
+    return (Math.floor(Math.random()*2000))
+};
+const carlosPromesa = new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        resolve("Carlos")
+    }, random(1000, 2000));
+});
+const mariaPromesa = new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        resolve("Maria")
+    }, random(1000, 2000));
+});
+const cristianPromesa = new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        resolve("Cristian")
+    }, random(1000, 2000));
+});
+Promise.race([carlosPromesa,mariaPromesa,cristianPromesa])
+    .then(response => console.log(`El ganador es: ${response}`))
+
+
+//---------------------- ASYNC/AWAIT
+// getDatosExternos retorna una promesa
+const getDatosExternos = () => {
+    return new Promise ((resolve,reject) => {
+        setTimeout(()=>{
+            resolve("Hola que tal")
+        },1000);
+    });
+};
+//getDatos devuelve el valor de la promesa "getDatosExternos"
+const getDatos = async() =>{
+    const response = await getDatosExternos();
+    console.log(response)
+}
+getDatos()
