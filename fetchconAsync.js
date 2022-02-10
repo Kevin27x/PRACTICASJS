@@ -30,4 +30,20 @@ fetch("https://dog.ceo/api/breeds/image/random")
 //    const response = await getPhoto()
 //};
 //Photo()
-// -------------------------3ra solución
+// -------------------------3ra solución (con try/catch)
+const div = document.getElementById("div");
+async function getPhoto(){
+    const url = "https://dog.ceo/api/breeds/image/random";
+    try{
+        //responseFetch espera la respuesta de fetch y la guarda
+        const responseFetch = await fetch(url);
+        //photo espera que se guarde fetch para parsear resultado de Fetch(.json())
+        const photo = await responseFetch.json();
+        console.log(photo);
+        div.innerHTML = `<img src="${photo.message}">`;
+
+    }catch(error) {
+        console.error(error)
+    }
+};
+getPhoto()
